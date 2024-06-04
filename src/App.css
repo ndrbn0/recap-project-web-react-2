@@ -1,4 +1,5 @@
-body {
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  padding: 10px;
+.color-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
