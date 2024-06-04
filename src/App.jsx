@@ -6,9 +6,21 @@ import ColorForm from "./Components/ColorForm/ColorForm";
 
 function App() {
   const [colors, setColors] = useState(initialColors);
+  const [colorToDelete, setColorToDelete] = useState(null);
 
   const addColor = (newColor) => {
-    setColors((prevColors) => [...prevColors, { ...newColor, id: nanoid() }]);
+    setColors((prevColors) => [{ ...newColor, id: nanoid() }, ...prevColors]);
+  };
+
+  const deleteColor = (colorId) => {
+    setColors((prevColors) =>
+      prevColors.filter((color) => color.id !== colorId)
+    );
+    setColorToDelete(null); // Reset the confirmation state
+  };
+
+  const handleDeleteConfirmation = (colorId) => {
+    setColorToDelete(colorId);
   };
 
   return (
@@ -17,7 +29,13 @@ function App() {
       <ColorForm onSubmitColor={addColor} />
       <div className="color-container">
         {colors.map((color) => (
-          <Color key={color.id} color={color} />
+          <Color
+            key={color.id}
+            color={color}
+            onDelete={handleDeleteConfirmation}
+            confirmDelete={colorToDelete === color.id}
+            deleteColor={deleteColor}
+          />
         ))}
       </div>
     </>
