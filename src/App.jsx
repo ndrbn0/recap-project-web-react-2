@@ -1,20 +1,13 @@
+import { useState } from "react";
 import { nanoid } from "nanoid";
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
-import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  const [colors, setColors] = useLocalStorageState("colors", {
-    defaultValue: initialColors,
-  });
-  const [colorToDelete, setColorToDelete] = useLocalStorageState(
-    "colorToDelete",
-    { defaultValue: null }
-  );
-  const [colorToEdit, setColorToEdit] = useLocalStorageState("colorToEdit", {
-    defaultValue: null,
-  });
+  const [colors, setColors] = useState(initialColors);
+  const [colorToDelete, setColorToDelete] = useState(null);
+  const [colorToEdit, setColorToEdit] = useState(null);
 
   const addColor = (newColor) => {
     setColors((prevColors) => [{ ...newColor, id: nanoid() }, ...prevColors]);
