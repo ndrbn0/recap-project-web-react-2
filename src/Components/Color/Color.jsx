@@ -1,6 +1,15 @@
+import ColorForm from "../ColorForm/ColorForm";
 import "./Color.css";
 
-export default function Color({ color, onDelete, confirmDelete, deleteColor }) {
+export default function Color({
+  color,
+  onDelete,
+  confirmDelete,
+  deleteColor,
+  onEdit,
+  isEditing,
+  updateColor,
+}) {
   return (
     <div
       className="color-card"
@@ -9,17 +18,30 @@ export default function Color({ color, onDelete, confirmDelete, deleteColor }) {
         color: color.contrastText,
       }}
     >
-      <h3 className="color-card-highlight">{color.hex}</h3>
-      <h4>{color.role}</h4>
-      <p>Contrast: {color.contrastText}</p>
-      {confirmDelete ? (
-        <div>
-          <p className="color-card-highlight">Are you sure?</p>
-          <button onClick={() => deleteColor(color.id)}>Yes</button>
-          <button onClick={() => onDelete(null)}>No</button>
-        </div>
+      {isEditing ? (
+        <ColorForm
+          onSubmitColor={updateColor}
+          initialData={color}
+          isEditMode={true}
+        />
       ) : (
-        <button onClick={() => onDelete(color.id)}>Delete</button>
+        <>
+          <h3 className="color-card-highlight">{color.hex}</h3>
+          <h4>{color.role}</h4>
+          <p>Contrast: {color.contrastText}</p>
+          {confirmDelete ? (
+            <div>
+              <p className="color-card-highlight">Are you sure?</p>
+              <button onClick={() => deleteColor(color.id)}>Yes</button>
+              <button onClick={() => onDelete(null)}>No</button>
+            </div>
+          ) : (
+            <>
+              <button onClick={() => onDelete(color.id)}>Delete</button>
+              <button onClick={onEdit}>Edit</button>
+            </>
+          )}
+        </>
       )}
     </div>
   );
