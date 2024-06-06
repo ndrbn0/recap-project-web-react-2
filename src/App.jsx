@@ -1,5 +1,4 @@
 import { nanoid } from "nanoid";
-import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
@@ -80,14 +79,6 @@ function App() {
     if (themeId === "t1") return; // Cannot delete Default Theme
     setThemes((prevThemes) =>
       prevThemes.filter((theme) => theme.id !== themeId)
-    );
-  };
-
-  const updateTheme = (themeId, updatedData) => {
-    setThemes((prevThemes) =>
-      prevThemes.map((theme) =>
-        theme.id === themeId ? { ...theme, ...updatedData } : theme
-      )
     );
   };
 
