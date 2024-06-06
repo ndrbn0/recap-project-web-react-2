@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "../Components/ThemeSwitcher.css";
-import "../lib/colors.js";
 
 export default function ThemeSwitcher({
   themes,

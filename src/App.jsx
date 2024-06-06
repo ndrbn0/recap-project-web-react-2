@@ -4,6 +4,7 @@ import ColorForm from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/InitialTheme";
 import ThemeSwitcher from "./Components/ThemeSwitcher";
+import "../src/App.css";
 
 function App() {
   const [themes, setThemes] = useLocalStorageState("themes", {
@@ -84,7 +85,7 @@ function App() {
 
   return (
     <>
-      <h1>Theme Creator</h1>
+      <h1 className="title">Theme Creator</h1>
       <ThemeSwitcher
         themes={themes}
         activeThemeId={activeThemeId}
