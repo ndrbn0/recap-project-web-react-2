@@ -3,11 +3,17 @@ import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
+import { initialThemes } from "./lib/InitialTheme";
+import ThemeSwitcher from "./Components/ThemeSwitcher";
 
 function App() {
-  const [colors, setColors] = useLocalStorageState("colors", {
-    defaultValue: initialColors,
+  const [themes, setThemes] = useLocalStorageState("themes", {
+    defaultValue: initialThemes,
   });
+  const [activeThemeId, setActiveThemeId] = useLocalStorageState(
+    "activeThemeId",
+    { defaultValue: "t1" }
+  );
   const [colorToDelete, setColorToDelete] = useLocalStorageState(
     "colorToDelete",
     { defaultValue: null }
@@ -16,13 +22,31 @@ function App() {
     defaultValue: null,
   });
 
+  const activeTheme = themes.find((theme) => theme.id === activeThemeId);
+
   const addColor = (newColor) => {
-    setColors((prevColors) => [{ ...newColor, id: nanoid() }, ...prevColors]);
+    setThemes((prevThemes) =>
+      prevThemes.map((theme) =>
+        theme.id === activeThemeId
+          ? {
+              ...theme,
+              colors: [{ ...newColor, id: nanoid() }, ...theme.colors],
+            }
+          : theme
+      )
+    );
   };
 
   const deleteColor = (colorId) => {
-    setColors((prevColors) =>
-      prevColors.filter((color) => color.id !== colorId)
+    setThemes((prevThemes) =>
+      prevThemes.map((theme) =>
+        theme.id === activeThemeId
+          ? {
+              ...theme,
+              colors: theme.colors.filter((color) => color.id !== colorId),
+            }
+          : theme
+      )
     );
     setColorToDelete(null);
   };
@@ -32,20 +56,54 @@ function App() {
   };
 
   const updateColor = (updatedColor) => {
-    setColors((prevColors) =>
-      prevColors.map((color) =>
-        color.id === updatedColor.id ? updatedColor : color
+    setThemes((prevThemes) =>
+      prevThemes.map((theme) =>
+        theme.id === activeThemeId
+          ? {
+              ...theme,
+              colors: theme.colors.map((color) =>
+                color.id === updatedColor.id ? updatedColor : color
+              ),
+            }
+          : theme
       )
     );
     setColorToEdit(null);
   };
 
+  const addTheme = (name) => {
+    const newTheme = { id: nanoid(), name, colors: [] };
+    setThemes((prevThemes) => [...prevThemes, newTheme]);
+  };
+
+  const deleteTheme = (themeId) => {
+    if (themeId === "t1") return; // Cannot delete Default Theme
+    setThemes((prevThemes) =>
+      prevThemes.filter((theme) => theme.id !== themeId)
+    );
+  };
+
+  const updateTheme = (themeId, updatedData) => {
+    setThemes((prevThemes) =>
+      prevThemes.map((theme) =>
+        theme.id === themeId ? { ...theme, ...updatedData } : theme
+      )
+    );
+  };
+
   return (
     <>
       <h1>Theme Creator</h1>
+      <ThemeSwitcher
+        themes={themes}
+        activeThemeId={activeThemeId}
+        setActiveThemeId={setActiveThemeId}
+        addTheme={addTheme}
+        deleteTheme={deleteTheme}
+      />
       <ColorForm onSubmitColor={addColor} />
       <div className="color-container">
-        {colors.map((color) => (
+        {activeTheme.colors.map((color) => (
           <Color
             key={color.id}
             color={color}
