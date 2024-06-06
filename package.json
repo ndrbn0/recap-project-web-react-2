@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@octokit/rest": "^20.1.0",
+    "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "nanoid": "^5.0.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "use-local-storage-state": "^19.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
