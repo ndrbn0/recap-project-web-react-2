@@ -24,7 +24,7 @@ function App() {
     setColors((prevColors) =>
       prevColors.filter((color) => color.id !== colorId)
     );
-    setColorToDelete(null); // Reset the confirmation state
+    setColorToDelete(null);
   };
 
   const handleDeleteConfirmation = (colorId) => {
@@ -37,7 +37,7 @@ function App() {
         color.id === updatedColor.id ? updatedColor : color
       )
     );
-    setColorToEdit(null); // Reset the edit state
+    setColorToEdit(null);
   };
 
   return (

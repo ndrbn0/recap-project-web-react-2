@@ -18,3 +18,16 @@
   border-radius: 4px;
   margin-bottom: 10px;
 }
+
+.button1 {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 8px;
+}

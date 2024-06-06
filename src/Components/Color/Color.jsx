@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import { getA11yScore } from "../../lib/contrastChecker";
+import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
 import "./Color.css";
 
 export default function Color({
@@ -39,9 +40,17 @@ export default function Color({
         />
       ) : (
         <>
-          <h3 className="color-card-highlight">{color.hex}</h3>
-          <h4>{color.role}</h4>
-          <p>Contrast: {color.contrastText}</p>
+          <div className="color-info">
+            <h3 className="color-card-highlight">{color.hex}</h3>
+            <CopyToClipboard text={color.hex} label="Hex" />
+          </div>
+          <div className="color-info">
+            <h4>{color.role}</h4>
+          </div>
+          <div className="color-info">
+            <p>Contrast: {color.contrastText}</p>
+            <CopyToClipboard text={color.contrastText} label="Contrast Text" />
+          </div>
           <p>A11y Score: {a11yScore ? a11yScore.ratio : "Loading..."}</p>
           {confirmDelete ? (
             <div>
@@ -51,8 +60,12 @@ export default function Color({
             </div>
           ) : (
             <>
-              <button onClick={() => onDelete(color.id)}>Delete</button>
-              <button onClick={onEdit}>Edit</button>
+              <button className="button1" onClick={() => onDelete(color.id)}>
+                Delete
+              </button>
+              <button className="button1" onClick={onEdit}>
+                Edit
+              </button>
             </>
           )}
         </>
