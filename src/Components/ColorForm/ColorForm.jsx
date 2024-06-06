@@ -63,7 +63,9 @@ export default function ColorForm({
           required
         />
       </div>
-      <button type="submit">{isEditMode ? "SAVE COLOR" : "ADD COLOR"}</button>
+      <button className="button1" type="submit">
+        {isEditMode ? "SAVE COLOR" : "ADD COLOR"}
+      </button>
     </form>
   );
 }
